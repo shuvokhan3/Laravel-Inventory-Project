@@ -59,13 +59,13 @@ class UserController extends Controller{
                 'status'=>'success',
                 'message' => 'User Login Successfully',
                 'token' => $token
-            ]);
+            ],200)->cookie('token', $token, 60);
 
 
         }else{
             return response()->json([
                 "status" => "failed",
-                "message" => "Unauthorized"
+                "message" => "unauthorized!"
             ]);
         }
     }

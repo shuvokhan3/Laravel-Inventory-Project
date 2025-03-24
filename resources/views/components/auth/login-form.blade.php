@@ -27,10 +27,35 @@
 
 <script>
 
-    SubmitLogin();
 
     async function SubmitLogin(){
-        console.log("Function work");
+        //using dom i catch the value of the form
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+
+        //validation
+        if(email.length === 0){
+            errorToast("Email is required");
+        }
+
+        else if(password.length === 0){
+            errorToast("Password is required");
+        }
+        else{
+            showLoader();
+            let res = await axios.post('/userLogin',{
+                email : email,
+                password : password
+            });
+            hideLoader();
+            if(res.status === 200 && res.data['status']==='success'){
+                window.location.href = '/dashboard';
+            }else{
+                errorToast(res.data['message']);
+            }
+        }
     }
+
+    SubmitLogin();
 
 </script>
