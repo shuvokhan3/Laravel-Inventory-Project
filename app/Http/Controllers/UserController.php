@@ -32,13 +32,14 @@ class UserController extends Controller{
 
             }else{//if email exits
                 return response()->json([
-                    'status'=>"Email Already Exist"
-                ],500);
+                    'status'=>"Failed",
+                    'message'=> "Email is Already Exist"
+                ]);
             }
 
         }catch(\Exception $ex) {
             return response()->json([
-                "status" => "failed",
+                "status" => "Registration Failed",
                 "message" => "User Registration Failed"
             ], 500);
         }
@@ -90,6 +91,7 @@ class UserController extends Controller{
                 Mail::to($email)->to(new OTPMail($otp));
             }catch (\Exception $ex){
                 return response()->json([
+                    "status" => "failed",
                     "message" => "OTP Mail Dose Not Work Properly"
                 ]);
             }
@@ -105,7 +107,7 @@ class UserController extends Controller{
              return response()->json([
                  'status'=>'success',
                  'message'=>'OTP Send Successfully'
-             ]);
+             ],200);
         }
         else{//return unauthorized
             return response()->json([
@@ -138,13 +140,14 @@ class UserController extends Controller{
             return response()->json([
                 'status'=>'success',
                 'message'=>'OTP verifcation  Successfully',
-                'token' => $token
+                'verifyOTPtoken' => $token
             ]);
         }
 
         else{
             return response()->json([
-                'status'=>'failed'
+                'status'=>'failed',
+                'message' => 'otp is invalid'
             ]);
         }
 
@@ -175,6 +178,10 @@ class UserController extends Controller{
             ]);
         }
 
+    }
+    public function UserLogout(){
+
+        return redirect('/login')->cookie('token', -1);
     }
 
 

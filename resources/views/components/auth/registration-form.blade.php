@@ -39,3 +39,58 @@
         </div>
     </div>
 </div>
+<script>
+
+
+    onRegistration()
+    async  function onRegistration() {
+
+        //catch the form value using dom
+        let email = document.getElementById('email').value;
+        let firstName = document.getElementById('firstName').value;
+        let lastName = document.getElementById('lastName').value;
+        let mobile = document.getElementById('mobile').value;
+        let password = document.getElementById('password').value;
+
+
+        //validate the value
+        if(email.length === 0){
+            errorToast("Fill-up Email Form");
+        }
+        else if(firstName.length === 0){
+            errorToast("Fill-Up FirstName Form");
+        }
+        else if(lastName.length === 0){
+            errorToast("Fill-Up LastName Form");
+        }
+        else if(mobile.length === 0){
+            errorToast("Fill-Up Mobile Form");
+        }
+        else if(password.length === 0){
+            errorToast("Fill-up Password Form");
+        }
+        else{
+
+            try{
+                showLoader();
+                //using axios i post the form value in the backend
+                let res = await axios.post('/userRegistration',{
+                    email : email,
+                    firstName : firstName,
+                    lastName : lastName,
+                    mobile : mobile,
+                    password : password
+                });
+                hideLoader();
+                if(res.status === 200 && res.data["status"] === "success"){
+                    window.location.href = '/dashboard';
+                    successToast(res.data["message"]);
+                }else{
+                    errorToast(res.data["message"]);
+                }
+            }catch (error){
+                console.log(error);
+            }
+        }
+    }
+</script>

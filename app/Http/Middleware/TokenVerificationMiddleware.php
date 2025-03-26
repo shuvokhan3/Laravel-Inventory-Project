@@ -17,7 +17,7 @@ class TokenVerificationMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         //here i recived token by header
-        $token = $request->header('token');
+        $token = $request->cookie('token');
 
         $result = (new JWTToken)->VerifyToken($token);
 

@@ -14,4 +14,33 @@
         </div>
     </div>
 </div>
-
+<script>
+    VerifyOtp()
+    async function VerifyOtp(){
+        let otp = document.getElementById('otp').value;
+        //when i send otp this time i set the email value in the session storage. now i get this value
+        let emailVal = sessionStorage.getItem('email');
+        if(otp.length > 4){
+            try{
+                showLoader();
+                let res = await axios.post('/verifyOTP',{
+                    otp: otp,
+                    email : emailVal
+                });
+                console.log(res);
+                hideLoader();
+                if(res.status === 200 && res.data["status"] === "success"){
+                    successToast(res.data["message"]);
+                    setTimeout(function (){
+                        window.location.href = '/resetpassword';
+                    },1000);
+                }else{
+                    errorToast(res.data["message"]);
+                }
+            }catch (error){
+                console.log(error);
+            }
+        }else{
+        }
+    }
+</script>
