@@ -15,15 +15,19 @@ Route::post('/verifyOTP',[UserController::class,'verifyOTP']);
 //Token Verify
 Route::post('/passwordReset',[UserController::class,'PasswordReset'])
 ->middleware(TokenVerificationMiddleware::class);
+//auto complete user profile data on the user profile form
+Route::get('/getUserProfileData',[UserController::class, 'getUserProfileData'])->middleware(TokenVerificationMiddleware::class);
+
 
 //user logout
-Route::get('/logout', [UserController::class, 'UserLogout']);
+Route::get('/logout', [UserController::class, 'UserLogout'])->middleware(TokenVerificationMiddleware::class);
 
 //page route
 Route::get('/login',[UserController::class,'ViewLogin']);
 Route::get('/userRegistration',[UserController::class,'ViewRegister']);
-Route::get('/resetpassword',[UserController::class,'ResetPassword']);
+Route::get('/resetpassword',[UserController::class,'ResetPassword'])->middleware(TokenVerificationMiddleware::class);
 Route::get('/sendOtp',[UserController::class,'SendOTP']);
 Route::get('/verifyOTP',[UserController::class, 'vOTP']);
-Route::get('/dashboard',[UserController::class,'Dashboard']);
+Route::get('/dashboard',[UserController::class,'Dashboard'])->middleware(TokenVerificationMiddleware::class);
+Route::get('/userProfile',[UserController::class, 'userProfile'])->middleware(TokenVerificationMiddleware::class);
 

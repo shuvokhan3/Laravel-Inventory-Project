@@ -28,11 +28,11 @@
 </head>
 <body>
 
-{{--<div id="loader" class="LoadingOverlay d-none">--}}
-{{--    <div class="Line-Progress">--}}
-{{--        <div class="indeterminate"></div>--}}
-{{--    </div>--}}
-{{--</div>--}}
+<div id="loader" class="LoadingOverlay d-none">
+    <div class="Line-Progress">
+        <div class="indeterminate"></div>
+    </div>
+</div>
 
 <nav class="navbar fixed-top px-0 shadow-sm bg-white">
     <div class="container-fluid">
@@ -110,7 +110,6 @@
 <div id="contentRef" class="content">
     @yield('content')
 </div>
-
 
 
 <script>

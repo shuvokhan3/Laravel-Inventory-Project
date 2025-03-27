@@ -51,15 +51,16 @@ class UserController extends Controller{
         // Using Eloquent ORM
         $count = User::where('email', $request->input('email'))
             ->where('password', $request->input('password'))
-            ->count();
+            ->select('id')->first();
 
-        if($count > 0){
-
-            $token = JWTToken::CreateToken($request->input('email'));
+        if($count !== null){
+            //JWT token issue for usar login
+            //user login-> jwt token issu
+            $token = JWTToken::CreateToken($request->input('email'),$count->id);
             return response()->json([
                 'status'=>'success',
                 'message' => 'User Login Successfully',
-                'token' => $token
+                'token'=>$token
             ],200)->cookie('token', $token, 60);
 
 
@@ -181,7 +182,27 @@ class UserController extends Controller{
     }
     public function UserLogout(){
 
-        return redirect('/login')->cookie('token', -1);
+        return redirect('/login')->cookie('token', '',-1);
+    }
+
+    public function getUserProfileData(Request $request)
+    {
+        $email = $request->header('email');
+        $id = $request->header('id');
+
+        $val = User::where('email', '=', $email)
+            ->where('id', '=', $id)->first();
+
+        if($val != null){
+            return response()->json([
+                'status'=> 'success',
+                'value' => $val
+            ],200);
+        }else{
+            return response()->json([
+                'status'=>'failed',
+            ]);
+        }
     }
 
 
@@ -207,5 +228,9 @@ class UserController extends Controller{
     public function Dashboard()
     {
         return view('pages.dashboard.dashboard-page');
+    }
+
+    public function userProfile(){
+        return view('pages.dashboard.userProfile-page');
     }
 }
