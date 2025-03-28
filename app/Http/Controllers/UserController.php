@@ -44,8 +44,6 @@ class UserController extends Controller{
             ], 500);
         }
     }
-
-
     public function UserLogin(Request $request){
 
         // Using Eloquent ORM
@@ -71,7 +69,6 @@ class UserController extends Controller{
             ]);
         }
     }
-
     public  function SendOtpCode(Request $request){
 
         //catch email from user request
@@ -119,7 +116,6 @@ class UserController extends Controller{
 
 
     }
-
     public function verifyOTP(Request $request)
     {
         //catch email and otp
@@ -154,7 +150,6 @@ class UserController extends Controller{
 
 
     }
-
     public function PasswordReset(Request $request)
     {
         try{
@@ -184,7 +179,6 @@ class UserController extends Controller{
 
         return redirect('/login')->cookie('token', '',-1);
     }
-
     public function getUserProfileData(Request $request)
     {
         $email = $request->header('email');
@@ -201,6 +195,41 @@ class UserController extends Controller{
         }else{
             return response()->json([
                 'status'=>'failed',
+            ]);
+        }
+    }
+    public function upDateUserProfileData(Request $request)
+    {
+        //id and email come from token header, that issue for this user when user try to login
+        $id = $request->header('id');
+        $email = $request->header('email');
+
+        $firstName = $request->input('firstName');
+        $lastName = $request->input('lastName');
+        $mobile = $request->input('mobile');
+        $password = $request->input('password');
+
+        try{
+            //using model i run query for update user database
+            User::where('id', '=', $id)
+                ->where('email', '=', $email)
+                ->first()
+                ->update([
+                    'firstName' => $firstName,
+                    'lastName' => $lastName,
+                    'mobile' => $mobile,
+                    'password' => $password
+                ]);
+            //return a success result if the profile update successfully
+            return response()->json([
+                'status'=>'success',
+                'message'=>'Profile Updated Successfully'
+            ],200);
+        }catch (\Exception $ex){
+            //return an error if profile not update successfully
+            return response()->json([
+                'status'=>'failed',
+                'message'=>'Update Failed'
             ]);
         }
     }

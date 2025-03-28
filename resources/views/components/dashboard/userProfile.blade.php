@@ -30,7 +30,7 @@
                         </div>
                         <div class="row m-0 p-0">
                             <div class="col-md-4 p-2">
-                                <button class="btn mt-3 w-100  bg-gradient-primary">Update</button>
+                                <button onclick="updateUserProfile()" class="btn mt-3 w-100 bg-gradient-primary">Update</button>
                             </div>
                         </div>
                     </div>
@@ -41,6 +41,7 @@
 </div>
 
 <script>
+
     getUserData();
 
     async function getUserData(){
@@ -59,5 +60,35 @@
         }catch (e) {
             console.log(e);
         }
+    }
+
+
+    async function updateUserProfile(){
+        //catch all necessry date from frontend using DOM
+        let firstName = document.getElementById('firstName').value;
+        let lastName = document.getElementById('lastName').value;
+        let mobile = document.getElementById('mobile').value;
+        let password = document.getElementById('password').value;
+
+        try{
+
+            let res = await axios.post('/upDateUserProfileData',{
+                'firstName' : firstName,
+                'lastName' : lastName,
+                'mobile' : mobile,
+                'password' : password
+            });
+
+            if(res.status === 200 && res.data['status'] === "success"){
+                successToast(res.data['message']);
+            }else{
+                errorToast(res.data['message']);
+            }
+
+
+        }catch (error){
+            errorToast("Response Not Success");
+        }
+
     }
 </script>
