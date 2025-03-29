@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function CategoryList(Request $request){
         try{
             $user_id = $request->header('id');
-            Category::where('user_id', '=', $user_id)->first();
+            return Category::where('user_id', '=', $user_id)->get();
         }catch (\Exception $e){
             return response([
                 'status' => 'Error',

@@ -29,3 +29,68 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+    async function getList() {
+        try {
+            showLoader();
+            let res = await axios.get('/categoryList');
+            hideLoader();
+
+            let tableData = $("#tableData");
+            let tableList = $("#tableList");
+
+            // Destroy existing DataTable instance
+            if ($.fn.DataTable.isDataTable('#tableData')) {
+                tableData.DataTable().destroy();
+            }
+
+            // Clear the table body
+            tableList.empty();
+
+            // Check if we have data
+            if (res.data && (Array.isArray(res.data) || typeof res.data === 'object')) {
+                // Convert to array if it's an object
+                let data = Array.isArray(res.data) ? res.data : [res.data];
+
+                // Populate the table
+                data.forEach(function (item, index) {
+                    let row = `<tr>
+                    <td>${index+1}</td>
+                    <td>${item.name}</td>
+                    <td>
+                        <button data-id="${item.id}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
+                        <button data-id="${item.id}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
+                    </td>
+                </tr>`;
+                    tableList.append(row);
+                });
+            }
+
+            // Initialize DataTable with options
+            new DataTable('#tableData');
+        } catch (error) {
+            hideLoader();
+            errorToast("Failed to load categories");
+            console.error(error);
+        }
+    }
+
+    // Initial load
+    $(document).ready(function() {
+        getList();
+
+        // Add event listeners for edit and delete buttons
+        $(document).on('click', '.editBtn', function() {
+            let id = $(this).data('id');
+            // Add your edit functionality here
+        });
+
+        $(document).on('click', '.deleteBtn', function() {
+            let id = $(this).data('id');
+            // Add your delete functionality here
+        });
+    });
+</script>

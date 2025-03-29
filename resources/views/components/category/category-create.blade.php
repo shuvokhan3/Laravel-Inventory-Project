@@ -23,3 +23,40 @@
         </div>
     </div>
 </div>
+
+<script>
+    async function Save() {
+        let categoryName = document.getElementById('categoryName').value;
+
+        if(!categoryName) {
+            errorToast("Category name is required!");
+            return;
+        }
+
+        try {
+            showLoader();
+            let res = await axios.post('/createCategory', {
+                'name': categoryName
+            }, {
+                headers: {
+                    // Make sure these headers are being sent if your controller requires them
+                    'id': localStorage.getItem('user_id'), // Assuming you store user ID in localStorage
+                    'email': localStorage.getItem('user_email') // Assuming you store user email in localStorage
+                }
+            });
+            hideLoader();
+
+            if (res.status === 201 || res.status === 200) { // Accept both 200 and 201
+                successToast(res.data.message);
+                document.getElementById("save-form").reset();
+                document.getElementById('modal-close').click();
+
+                // Refresh the table data without reloading the page
+                await getList();
+            }
+        } catch (error) {
+            hideLoader();
+            errorToast(error.response?.data?.message || "Something went wrong!");
+        }
+    }
+</script>
