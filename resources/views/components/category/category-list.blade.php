@@ -77,20 +77,28 @@
             console.error(error);
         }
     }
-
     // Initial load
     $(document).ready(function() {
+        //when i add a new category this time call getList(),
+        //// Refresh the table data without reloading the page
         getList();
 
         // Add event listeners for edit and delete buttons
         $(document).on('click', '.editBtn', function() {
             let id = $(this).data('id');
-            // Add your edit functionality here
+            $("#update-modal").modal('show');
+            $("#updateID").val(id);
+
+            // Call getCategory() only after setting the ID
+            getCategory();
+
         });
 
         $(document).on('click', '.deleteBtn', function() {
             let id = $(this).data('id');
-            // Add your delete functionality here
+            //this line for show delete popup or modal, it's mean another blade component
+            $("#delete-modal").modal('show')
+            $("#deleteID").val(id);
         });
     });
 </script>

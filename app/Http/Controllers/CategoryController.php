@@ -52,43 +52,41 @@ class CategoryController extends Controller
 
     //CategoryDelete
     public function CategoryDelete(Request $request){
-        $id = $request->header('id');
-        $category = Category::find($id);
+        $user_id = $request->header('id');
+        $category_id = $request->input('id');
 
-        if(!$category){
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Sorry, something went wrong. Please try again later.'
-            ]);
-        }else{
-            $category->delete();
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Category deleted successfully!'
-            ]);
-        }
+        return Category::where('user_id', '=', $user_id)
+            ->where('id' , '=', $category_id)
+            ->delete();
+    }
+
+    //show category which category user want to update
+    public function ShowCategoryUpdateFormData(Request $request){
+        $user_id = $request->header('id');
+        $category_id = $request->input('id');
+
+        $val =  Category::where('user_id' , '=', $user_id)
+            ->where('id', '=', $category_id)
+            ->first();
+
+        return response()->json([
+            'value' => $val
+        ]);
+
     }
 
     //CategoryUpdate
     public function CategoryUpdate(Request $request)
     {
-        $id = $request->header('id');
-        $category = Category::find($id);
+        $user_id = $request->header('id');
+        $category_id = $request->input('id');
 
-        if(!$category){
-            return response()->json([
-                'status' => 'Error',
-                'message' => 'Sorry, something went wrong. Please try again later.'
+        return Category::where('user_id', '=' ,$user_id)
+            ->where('id' , '=', $category_id)
+            ->update([
+                'name' => $request->input('name')
             ]);
-        }else{
-            $category->update([
-                'name' => $request->input('name'),
-            ]);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Category updated successfully!'
-            ]);
-        }
     }
+
+
 }

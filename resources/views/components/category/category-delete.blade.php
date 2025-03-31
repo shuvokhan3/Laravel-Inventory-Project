@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-body text-center">
                 <h3 class=" mt-3 text-warning">Delete !</h3>
-                <p class="mb-3">Once delete, you can't get it back.</p>
+                <p class="mb-3">Are You Sure, You Want To Delete This Category?</p>
                 <input class="d-none" id="deleteID"/>
             </div>
             <div class="modal-footer justify-content-end">
@@ -15,3 +15,26 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+    async function itemDelete(){
+        //catch id
+        let idDelete = document.getElementById('deleteID').value;
+        // //close the model
+        document.getElementById('delete-modal-close').click()
+        //
+        showLoader();
+        let res = await axios.post('/categoryDelete',{
+            id : idDelete
+        });
+        hideLoader();
+        if(res.data === 1 ){
+            successToast("Category Delete Successfully!!");
+            await getList();
+        }else{
+            errorToast("Failed");
+        }
+    }
+</script>

@@ -24,3 +24,28 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+    //for fatch category in the database and set it inside the form
+    async function getCategory(){
+        try {
+            document.getElementById('categoryNameUpdate').value = null;
+            let updateID = document.getElementById('updateID').value;
+            let res = await axios.get('/ShowCategoryUpdateFormData',{
+                params :{id : updateID}
+            });
+            let data = res.data['value'];
+            document.getElementById('categoryNameUpdate').value = data['name'];
+        }catch (e){
+            console.log(e);
+        }
+
+    }
+
+
+    async function Update(){
+        let categoryNameUpdate = document.getElementById('categoryNameUpdate').value;
+    }
+</script>

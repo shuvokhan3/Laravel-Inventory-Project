@@ -30,6 +30,8 @@ Route::post('/createCategory',[CategoryController::class,'CategoryStore'])->midd
 Route::get('/categoryList',[CategoryController::class, 'CategoryList'])->middleware(TokenVerificationMiddleware::class);
 //Delete category
 Route::post('/categoryDelete',[CategoryController::class,'CategoryDelete'])->middleware(TokenVerificationMiddleware::class);
+//show category
+Route::get('/ShowCategoryUpdateFormData',[CategoryController::class, 'ShowCategoryUpdateFormData'])->middleware(TokenVerificationMiddleware::class);
 //update Category
 Route::post('/categoryUpdate',[CategoryController::class,'CategoryUpdate'])->middleware(TokenVerificationMiddleware::class);
 
