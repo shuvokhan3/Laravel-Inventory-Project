@@ -78,14 +78,27 @@ class CategoryController extends Controller
     //CategoryUpdate
     public function CategoryUpdate(Request $request)
     {
-        $user_id = $request->header('id');
-        $category_id = $request->input('id');
+        try{
+            $user_id = $request->header('id');
+            $category_id = $request->input('id');
 
-        return Category::where('user_id', '=' ,$user_id)
-            ->where('id' , '=', $category_id)
-            ->update([
-                'name' => $request->input('name')
+            Category::where('user_id', '=' ,$user_id)
+                ->where('id' , '=', $category_id)
+                ->update([
+                    'name' => $request->input('name')
+                ]);
+
+            return $request->json([
+                'status' => 'success',
+                'message' => 'category updated successfully!'
+            ],200);
+
+        }catch (\Exception $e){
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Sorry, something went wrong. Please try again later.'
             ]);
+        }
     }
 
 

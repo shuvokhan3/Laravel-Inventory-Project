@@ -29,6 +29,8 @@
 
 
     //for fatch category in the database and set it inside the form
+
+
     async function getCategory(){
         try {
             document.getElementById('categoryNameUpdate').value = null;
@@ -47,5 +49,28 @@
 
     async function Update(){
         let categoryNameUpdate = document.getElementById('categoryNameUpdate').value;
+        let categoryId = document.getElementById('updateID').value;
+        showLoader();
+        let res = await axios.post('/categoryUpdate',{
+            name : categoryNameUpdate,
+            id : categoryId
+        });
+
+
+        hideLoader();
+        console.log(res);
+
+
+        if(res.status === 200){
+            console.log("Come here");
+            successToast(res.data['message']);
+            document.getElementById("update-form").reset();
+            document.getElementById('update-modal-close').click();
+
+            // Refresh the table data without reloading the page
+            await getList();
+        }else{
+            errorToast(res.data['message']);
+        }
     }
 </script>
