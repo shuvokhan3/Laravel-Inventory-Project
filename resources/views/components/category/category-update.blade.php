@@ -62,7 +62,6 @@
 
 
         if(res.status === 200){
-            console.log("Come here");
             successToast(res.data['message']);
             document.getElementById("update-form").reset();
             document.getElementById('update-modal-close').click();
