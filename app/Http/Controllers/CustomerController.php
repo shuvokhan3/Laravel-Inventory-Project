@@ -25,7 +25,7 @@ class CustomerController extends Controller
             return response()->json([
                 'status'=>'success',
                 'message'=>'Customer Added Successfully'
-            ]);
+            ],201);
         }catch (\Exception $e){
             return response()->json([
                 'status'=>'error',
@@ -72,13 +72,8 @@ class CustomerController extends Controller
         try{
             $customer_id = $request->input('id');
             $user_id = $request->header('id');
-            Customer::where('user_id', '=',$user_id)
+            return Customer::where('user_id', '=',$user_id)
                 ->where('id', '=' ,$customer_id)->first();
-
-            return response()->json([
-                'status'=>'success',
-                'message'=>'Customer Detail Found'
-            ]);
         }catch (\Exception $e){
             return response()->json([
                 'status'=>'error',

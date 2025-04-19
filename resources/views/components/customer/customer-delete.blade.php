@@ -22,9 +22,10 @@
             let id=document.getElementById('deleteID').value;
             document.getElementById('delete-modal-close').click();
             showLoader();
-            let res=await axios.post("/delete-customer",{id:id})
+            let res=await axios.post("/customerDelete",{id:id})
             hideLoader();
-            if(res.data===1){
+            console.log(res);
+            if(res.status === 200){
                 successToast("Request completed")
                 await getList();
             }

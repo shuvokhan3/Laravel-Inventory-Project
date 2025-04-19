@@ -48,7 +48,7 @@ Route::get('/customerPage',[CustomerController::class,'viewCustomer'])->middlewa
 Route::post('/createCustomer',[CustomerController::class,'CustomerStore'])->middleware(TokenVerificationMiddleware::class);
 Route::get('/customerList',[CustomerController::class, 'CustomerList'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/customerDelete',[CustomerController::class,'CustomerDelete'])->middleware(TokenVerificationMiddleware::class);
-Route::get('/customerById',[CustomerController::class, 'CustomerById'])->middleware(TokenVerificationMiddleware::class);
+Route::post('/customerById',[CustomerController::class, 'CustomerById'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/customerUpdate',[CustomerController::class,'CustomerUpdate'])->middleware(TokenVerificationMiddleware::class);
 
 

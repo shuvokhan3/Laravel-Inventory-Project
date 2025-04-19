@@ -18,7 +18,7 @@
                                 <label class="form-label mt-3">Customer Mobile *</label>
                                 <input type="text" class="form-control" id="customerMobileUpdate">
 
-                                <input type="text" class="d-none" id="updateID">
+                                <input type="text" class="" id="updateID">
                             </div>
                         </div>
                     </div>
@@ -38,9 +38,10 @@
 
 
     async function FillUpUpdateForm(id){
-        document.getElementById('updateID').value=id;
+        let val = document.getElementById('updateID').value=id;
+
         showLoader();
-        let res=await axios.post("/customer-by-id",{id:id})
+        let res=await axios.post("/customerById",{id:val})
         hideLoader();
         document.getElementById('customerNameUpdate').value=res.data['name'];
         document.getElementById('customerEmailUpdate').value=res.data['email'];
@@ -54,6 +55,8 @@
         let customerEmail = document.getElementById('customerEmailUpdate').value;
         let customerMobile = document.getElementById('customerMobileUpdate').value;
         let updateID = document.getElementById('updateID').value;
+
+
 
 
         if (customerName.length === 0) {
@@ -71,11 +74,12 @@
 
             showLoader();
 
-            let res = await axios.post("/update-customer",{name:customerName,email:customerEmail,mobile:customerMobile,id:updateID})
+            let res = await axios.post("/customerUpdate",{name:customerName,email:customerEmail,mobile:customerMobile,id:updateID})
 
             hideLoader();
+            console.log(res);
 
-            if(res.status===200 && res.data===1){
+            if(res.status===200){
 
                 successToast('Request completed');
 
