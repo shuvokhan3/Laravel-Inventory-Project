@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,22 @@ Route::post('/customerById',[CustomerController::class, 'CustomerById'])->middle
 Route::post('/customerUpdate',[CustomerController::class,'CustomerUpdate'])->middleware(TokenVerificationMiddleware::class);
 
 
+//product route
+//product page route
+Route::get('/productPage',[ProductController::class,'ViewProduct'])->middleware(TokenVerificationMiddleware::class);
+
+//product backend route
+Route::post('/createProduct',[ProductController::class,'CreateProduct'])->middleware(TokenVerificationMiddleware::class);
+Route::post('/productDelete',[ProductController::class,'DeleteProduct'])->middleware(TokenVerificationMiddleware::class);
+Route::get('/productList',[ProductController::class, 'ProductList'])->middleware(TokenVerificationMiddleware::class);
+Route::post('/productById',[ProductController::class, 'productById'])->middleware(TokenVerificationMiddleware::class);
+Route::post('/updateProduct',[ProductController::class,'UpdateProduct'])->middleware(TokenVerificationMiddleware::class);
+
+
+
+
+
+
 //page route
 Route::get('/login',[UserController::class,'ViewLogin']);
 Route::get('/userRegistration',[UserController::class,'ViewRegister']);
@@ -60,3 +77,4 @@ Route::get('/sendOtp',[UserController::class,'SendOTP']);
 Route::get('/verifyOTP',[UserController::class, 'vOTP']);
 Route::get('/dashboard',[UserController::class,'Dashboard'])->middleware(TokenVerificationMiddleware::class);
 Route::get('/userProfile',[UserController::class, 'userProfile'])->middleware(TokenVerificationMiddleware::class);
+
