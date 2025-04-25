@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\TokenVerificationMiddleware;
@@ -51,6 +52,9 @@ Route::get('/customerList',[CustomerController::class, 'CustomerList'])->middlew
 Route::post('/customerDelete',[CustomerController::class,'CustomerDelete'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/customerById',[CustomerController::class, 'CustomerById'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/customerUpdate',[CustomerController::class,'CustomerUpdate'])->middleware(TokenVerificationMiddleware::class);
+
+//invoice route
+Route::post('/invoiceCreate',[InvoiceController::class, 'InvoiceCreate'])->middleware(TokenVerificationMiddleware::class);
 
 
 //product route

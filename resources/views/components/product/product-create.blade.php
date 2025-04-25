@@ -82,6 +82,7 @@
             errorToast("Product Image Required !")
         }
         else{
+            
             document.getElementById('modal-close').click();
 
             let formData = new FormData();
