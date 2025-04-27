@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
+    function SalePage(){
+        return view('pages.dashboard.sale-page');
+    }
 
     //create Invoice
     public function InvoiceCreate(Request $request){
@@ -18,9 +21,10 @@ class InvoiceController extends Controller
         try{
             //get the all the data from input and user_id from header when jwt issue
             $user_id = $request->header('id');
+
             $total = $request->input('total');
             $discount = $request->input('discount');
-            $vat = $request->input('val');
+            $vat = $request->input('vat');
             $payable = $request->input('payable');
             $customer_id = $request->input('customer_id');
 
@@ -44,7 +48,7 @@ class InvoiceController extends Controller
                     'invoice_id'=>$invoice_id,
                     'user_id'=>$user_id,
                     'product_id'=>$EachProduct['product_id'],
-                    'qty'=>$EachProduct['qyt'],
+                    'qty'=>$EachProduct['qty'],
                     'sale_price'=>$EachProduct['sale_price']
                 ]);
             }
