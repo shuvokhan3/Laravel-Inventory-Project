@@ -19,8 +19,8 @@ Route::get('/logout', [UserController::class, 'UserLogout'])->middleware(TokenVe
 Route::post('/sendOtpCode',[UserController::class,'SendOtpCode']);
 Route::post('/verifyOTP',[UserController::class,'verifyOTP']);
 //Token Verify
-Route::post('/passwordReset',[UserController::class,'PasswordReset'])
-->middleware(TokenVerificationMiddleware::class);
+Route::post('/passwordReset',[UserController::class,'PasswordReset'])->middleware(TokenVerificationMiddleware::class);
+
 //auto complete user profile data on the user profile form
 Route::get('/getUserProfileData',[UserController::class, 'getUserProfileData'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/upDateUserProfileData',[UserController::class, 'upDateUserProfileData'])->middleware(TokenVerificationMiddleware::class);
@@ -53,8 +53,11 @@ Route::post('/customerDelete',[CustomerController::class,'CustomerDelete'])->mid
 Route::post('/customerById',[CustomerController::class, 'CustomerById'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/customerUpdate',[CustomerController::class,'CustomerUpdate'])->middleware(TokenVerificationMiddleware::class);
 
-//invoice route
+//invoice backend route
 Route::post('/invoiceCreate',[InvoiceController::class, 'InvoiceCreate'])->middleware(TokenVerificationMiddleware::class);
+Route::get('/invoiceSelect',[InvoiceController::class, 'InvoiceSelect'])->middleware(TokenVerificationMiddleware::class);
+Route::post('/invoiceDetails',[InvoiceController::class, 'InvoiceDetails'])->middleware(TokenVerificationMiddleware::class);
+Route::post('/invoiceDelete',[InvoiceController::class, 'InvoiceDelete'])->middleware(TokenVerificationMiddleware::class);
 
 
 //product route

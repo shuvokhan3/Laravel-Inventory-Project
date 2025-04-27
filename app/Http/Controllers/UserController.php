@@ -258,7 +258,6 @@ class UserController extends Controller{
     {
         return view('pages.dashboard.dashboard-page');
     }
-
     public function userProfile(){
         return view('pages.dashboard.userProfile-page');
     }

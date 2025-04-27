@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use Illuminate\Http\Request;
@@ -61,6 +62,51 @@ class InvoiceController extends Controller
     public function InvoiceSelect(Request $request){
         $user_id = $request->header('id');
         return Invoice::where('user_id',$user_id)->with('customer')->get();
+    }
+
+    public function InvoiceDetails(Request $request){
+
+        $user_id = $request->header('id');
+
+        $customerDetails = Customer::where('user_id',$user_id)
+            ->where('id',$request->input('customer_id'))->first();
+
+        $invoiceProduct = InvoiceProduct::where('invoice_id',$request->input('invoice_id'))
+            ->where('user_id',$user_id)
+            ->get();
+
+        $invoiceTotal = Invoice::where('user_id',$user_id)->where('id',$request->input('invoice_id'))->first();
+
+
+
+        return array(
+            'customer'=>$customerDetails,
+            'invoice'=>$invoiceTotal,
+            'product'=>$invoiceProduct
+        );
+    }
+
+    public function InvoiceDelete(Request $request){
+        DB::beginTransaction();
+        try{
+            $user_id = $request->header('id');
+
+            //delete operation inside InvoiceProduct model
+            InvoiceProduct::where('invoice_id',$request->input('invoice_id'))
+                ->where('user_id',$user_id)
+                ->delete();
+            //delete operation inside Invoice model;
+            Invoice::where('id',$request->input('invoice_id'))
+                ->delete();
+
+            //at last commit all operation
+            DB::commit();
+            return 1;
+
+        }catch (\Exception $e){
+            DB::rollBack();
+            return 0;
+        }
     }
 
 
