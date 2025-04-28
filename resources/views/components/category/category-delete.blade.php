@@ -25,11 +25,14 @@
         // //close the model
         document.getElementById('delete-modal-close').click()
         //
+        console.log(idDelete);
         showLoader();
         let res = await axios.post('/categoryDelete',{
             id : idDelete
         });
         hideLoader();
+
+
         if(res.data === 1 ){
             successToast("Category Delete Successfully!!");
             await getList();
