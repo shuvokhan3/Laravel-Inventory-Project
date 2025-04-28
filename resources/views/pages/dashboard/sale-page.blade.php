@@ -342,6 +342,7 @@
 
                 if(res.data === 1 && res.status === 200){
                     successToast("Invoice Created!");
+                    window.location.href = '/invoicePage';
                 }else{
                     errorToast("Something Went Wrong!");
                 }
