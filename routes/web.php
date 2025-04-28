@@ -53,11 +53,16 @@ Route::post('/customerDelete',[CustomerController::class,'CustomerDelete'])->mid
 Route::post('/customerById',[CustomerController::class, 'CustomerById'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/customerUpdate',[CustomerController::class,'CustomerUpdate'])->middleware(TokenVerificationMiddleware::class);
 
+//invoice creation process make in the sale page
 //invoice backend route
 Route::post('/invoiceCreate',[InvoiceController::class, 'InvoiceCreate'])->middleware(TokenVerificationMiddleware::class);
 Route::get('/invoiceSelect',[InvoiceController::class, 'InvoiceSelect'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/invoiceDetails',[InvoiceController::class, 'InvoiceDetails'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/invoiceDelete',[InvoiceController::class, 'InvoiceDelete'])->middleware(TokenVerificationMiddleware::class);
+
+//invoice page
+Route::get('/invoicePage',[InvoiceController::class, 'InvoicePage'])->middleware(TokenVerificationMiddleware::class);
+
 
 
 //product route
@@ -85,3 +90,4 @@ Route::get('/verifyOTP',[UserController::class, 'vOTP']);
 Route::get('/dashboard',[UserController::class,'Dashboard'])->middleware(TokenVerificationMiddleware::class);
 Route::get('/userProfile',[UserController::class, 'userProfile'])->middleware(TokenVerificationMiddleware::class);
 
+Route::get('/salePage',[InvoiceController::class, 'SalePage'])->middleware(TokenVerificationMiddleware::class);
