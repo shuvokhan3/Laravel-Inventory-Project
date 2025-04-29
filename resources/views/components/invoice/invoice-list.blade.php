@@ -43,6 +43,8 @@
         let res = await axios.get('/invoiceSelect');
         hideLoader();
 
+        console.log("Invoice List Response : " + res);
+
 
         let tableList=$("#tableList");
         let tableData=$("#tableData");
@@ -78,7 +80,7 @@
         $('.viewBtn').on('click', async function () {
             let id= $(this).data('id');
             let cus= $(this).data('cus');
-            await InvoiceDetails(cus,id);
+            await InvoiceDetails(id, cus);
         })
 
         new DataTable('#tableData',{

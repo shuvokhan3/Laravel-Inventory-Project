@@ -161,6 +161,33 @@
     </div>
 </div>
 
+<script>
+
+
+    getSummary();
+
+    async function getSummary(){
+
+        showLoader();
+        let res = await axios.get('/dashboardSummary');
+        hideLoader();
+
+        if(res.status === 200){
+            document.getElementById('product').innerHTML = res.data['product'];
+            document.getElementById('category').innerHTML = res.data['category'];
+            document.getElementById('customer').innerHTML = res.data['customer'];
+            document.getElementById('invoice').innerHTML = res.data['invoice'];
+            document.getElementById('total').innerHTML =  res.data['total'];
+            document.getElementById('vat').innerHTML = res.data['vat'];
+            document.getElementById('payable').innerHTML = res.data['payable'];
+        }else{
+            errorToast('Dashboard Data Not Found!!');
+        }
+
+
+    }
+</script>
+
 
 
 

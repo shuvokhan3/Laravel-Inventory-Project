@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -74,24 +75,38 @@ class InvoiceController extends Controller
 
     public function InvoiceDetails(Request $request){
 
-        $user_id = $request->header('id');
+        try{
 
-        $customerDetails = Customer::where('user_id',$user_id)
-            ->where('id',$request->input('customer_id'))->first();
+            $user_id = $request->header('id');
 
-        $invoiceProduct = InvoiceProduct::where('invoice_id',$request->input('invoice_id'))
-            ->where('user_id',$user_id)
-            ->get();
+            $customerDetails = Customer::where('user_id',$user_id)
+                ->where('id',$request->input('customer_id'))
+                ->first();
 
-        $invoiceTotal = Invoice::where('user_id',$user_id)->where('id',$request->input('invoice_id'))->first();
+            $invoiceProduct = InvoiceProduct::where('invoice_id',$request->input('invoice_id'))
+                ->where('user_id',$user_id)
+                ->with('product:id,name')
+                ->get();
+
+            $invoiceTotal = Invoice::where('user_id',$user_id)
+                ->where('id',$request->input('invoice_id'))
+                ->first();
 
 
+            return array(
+                'customer'=>$customerDetails,
+                'invoice'=>$invoiceTotal,
+                'product'=>$invoiceProduct
+            );
 
-        return array(
-            'customer'=>$customerDetails,
-            'invoice'=>$invoiceTotal,
-            'product'=>$invoiceProduct
-        );
+
+        }catch (\Exception $e){
+            return response()->json([
+                'Status' => 'error',
+                'Message' => $e->getMessage()
+            ]);
+        }
+
     }
 
     public function InvoiceDelete(Request $request){

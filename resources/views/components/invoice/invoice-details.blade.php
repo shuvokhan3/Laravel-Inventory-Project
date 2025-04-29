@@ -33,10 +33,12 @@
                                     <td>Total</td>
                                 </tr>
                                 </thead>
+
                                 <tbody  class="w-100" id="invoiceList">
 
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                     <hr class="mx-0 my-2 p-0 bg-secondary"/>
@@ -44,7 +46,7 @@
                         <div class="col-12">
                             <p class="text-bold text-xs my-1 text-dark"> TOTAL: <i class="bi bi-currency-dollar"></i> <span id="total"></span></p>
                             <p class="text-bold text-xs my-2 text-dark"> PAYABLE: <i class="bi bi-currency-dollar"></i>  <span id="payable"></span></p>
-                            <p class="text-bold text-xs my-1 text-dark"> VAT(5%): <i class="bi bi-currency-dollar"></i>  <span id="vat"></span></p>
+                            <p class="text-bold text-xs my-1 text-dark"> VAT(2%): <i class="bi bi-currency-dollar"></i>  <span id="vat"></span></p>
                             <p class="text-bold text-xs my-1 text-dark"> Discount: <i class="bi bi-currency-dollar"></i>  <span id="discount"></span></p>
                         </div>
 
@@ -61,37 +63,52 @@
 
 <script>
 
-    async function InvoiceDetails(id, customer_id){
+    async function InvoiceDetails(id, cus){
         showLoader();
         let res = await axios.post('/invoiceDetails',{
-            customer_id:customer_id,
+            customer_id:cus,
             invoice_id:id
         });
-
-        console.log(res);
         hideLoader();
 
-        document.getElementById('CName').innerText=res.data['customer']['name']
-        document.getElementById('CId').innerText=res.data['customer']['user_id']
-        document.getElementById('CEmail').innerText=res.data['customer']['email']
-        document.getElementById('total').innerText=res.data['invoice']['total']
-        document.getElementById('payable').innerText=res.data['invoice']['payable']
-        document.getElementById('vat').innerText=res.data['invoice']['vat']
-        document.getElementById('discount').innerText=res.data['invoice']['discount']
+        console.log(res);
+
+        document.getElementById('CName').innerHTML = res.data['customer']['name'];
+        document.getElementById('CEmail').innerHTML = res.data['customer']['email']
+        document.getElementById('CId').innerHTML = res.data['customer']['id'];
 
         let invoiceList=$('#invoiceList');
+
         invoiceList.empty();
 
-        res.data['product'].forEach(function (item,index) {
-            let row=`<tr class="text-xs">
-                    <td>${item['product_id']}</td>
-                    <td>${item['qty']}</td>
-                    <td>${item['sale_price']}</td>
-                 </tr>`
-            invoiceList.append(row)
+        res.data['product'].forEach(function(item, index){
+            let row = `<tr class="text-xs">
+                        <td>${item['product']['name']}</td>
+                        <td>${item['qty']}</td>
+                        <td>${item['sale_price']}</td>
+                     </tr>`
+            invoiceList.append(row);
         });
+
+        document.getElementById('total').innerHTML = res.data['invoice']['total']
+        document.getElementById('payable').innerHTML = res.data['invoice']['payable']
+        document.getElementById('vat').innerHTML = res.data['invoice']['vat']
+        document.getElementById('discount').innerHTML = res.data['invoice']['discount']
+
 
         $("#details-modal").modal('show');
 
+    }
+
+    function PrintPage(){
+        let printContents = document.getElementById('invoice').innerHTML;
+
+        let originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        setTimeout(function(){
+            location.reload();
+        },100);
     }
 </script>
