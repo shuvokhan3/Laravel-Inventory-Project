@@ -3,63 +3,95 @@
     <div class="container-fluid">
         <div class="row">
 
-            <!--Bill Section -->
-            <div class="col-md-4 col-lg-4 p-2">
-                <div class="shadow-sm h-100 bg-white rounded-3 p-3">
-                    <div class="row">
+            <!-- Invoice Section -->
+            <div class="col-md-4 col-lg-4 p-3">
+                <div class="shadow h-100 bg-white rounded-lg p-4 border">
+                    <!-- Header Section -->
+                    <div class="row mb-3 align-items-center">
                         <div class="col-8">
-                            <span class="text-bold text-dark">BILLED TO </span>
-                            <p class="text-xs mx-0 my-1">Name:  <span id="CName"></span> </p>
-                            <p class="text-xs mx-0 my-1">Email:  <span id="CEmail"></span></p>
-                            <p class="text-xs mx-0 my-1">User ID:  <span id="CId"></span> </p>
+                            <h5 class="font-weight-bold text-dark mb-3">INVOICE</h5>
+                            <div class="client-info">
+                                <p class="text-sm mb-1"><strong>Billed To:</strong></p>
+                                <p class="text-sm mb-1"><span id="CName" class="text-muted"></span></p>
+                                <p class="text-sm mb-1"><span id="CEmail" class="text-muted"></span></p>
+                                <p class="text-sm mb-1"><small class="text-muted">Client ID: <span id="CId"></span></small></p>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <img class="w-50" src="{{"images/logo.png"}}">
-                            <p class="text-bold mx-0 my-1 text-dark">Invoice  </p>
-                            <p class="text-xs mx-0 my-1">Date: {{ date('Y-m-d') }} </p>
-                        </div>
-                    </div>
-                    <hr class="mx-0 my-2 p-0 bg-secondary"/>
-                    <div class="row">
-                        <div class="col-12">
-                            <table class="table w-100" id="invoiceTable">
-                                <thead class="w-100">
-                                <tr class="text-xs">
-                                    <td>Name</td>
-                                    <td>Qty</td>
-                                    <td>Total</td>
-                                    <td>Remove</td>
-                                </tr>
-                                </thead>
-                                <tbody  class="w-100" id="invoiceList">
-
-                                </tbody>
-                            </table>
+                        <div class="col-4 text-right">
+                            <img class="img-fluid mb-2" src="{{'images/logo.png'}}" alt="Company Logo">
+                            <p class="text-sm mb-1"><strong>Date:</strong> {{ date('Y-m-d') }}</p>
+                            <p class="text-sm mb-1"><strong>Invoice #:</strong> INV-{{rand(10000,99999)}}</p>
                         </div>
                     </div>
-                    <hr class="mx-0 my-2 p-0 bg-secondary"/>
+
+                    <!-- Divider -->
+                    <hr class="my-3 border-top border-gray-200">
+
+                    <!-- Items Table -->
+                    <div class="row mb-3 color-background color-green">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table table-borderless" id="invoiceTable">
+                                    <thead>
+
+                                    </thead>
+                                    <tbody id="invoiceList">
+                                    <!-- Example item row for visual reference -->
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Summary Section -->
                     <div class="row">
                         <div class="col-12">
-                            <p class="text-bold text-xs my-1 text-dark"> TOTAL: <i class="bi bi-currency-dollar"></i> <span id="total"></span></p>
-                            <p class="text-bold text-xs my-2 text-dark"> PAYABLE: <i class="bi bi-currency-dollar"></i>  <span id="payable"></span></p>
-                            <p class="text-bold text-xs my-1 text-dark"> VAT(2%): <i class="bi bi-currency-dollar"></i>  <span id="vat"></span></p>
-                            <p class="text-bold text-xs my-1 text-dark"> Discount: <i class="bi bi-currency-dollar"></i>  <span id="discount"></span></p>
-                            <span class="text-xxs">Discount(%):</span>
-                            <input onkeydown="return false" value="0" min="0" type="number" step="0.25" onchange="DiscountChange()" class="form-control w-40 " id="discountP"/>
-                            <p>
-                                <button onclick="CreateInvoice()" class="btn  my-3 bg-gradient-primary w-40">Confirm</button>
-                            </p>
-                        </div>
-                        <div class="col-12 p-2">
+                            <div class="bg-light p-3 rounded">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-secondary">Subtotal:</span>
+                                    <span class="text-secondary">$ <span id="total"></span></span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-secondary">VAT (2%):</span>
+                                    <span class="text-secondary">$ <span id="vat"></span></span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-secondary">Discount:</span>
+                                    <span class="text-secondary">$ <span id="discount">0</span></span>
+                                </div>
+                                <hr class="my-2">
+                                <div class="d-flex justify-content-between font-weight-bold">
+                                    <span class="text-primary">TOTAL DUE:</span>
+                                    <span class="text-primary">$ <span id="payable"></span></span>
+                                </div>
+                            </div>
 
-                        </div>
+                            <!-- Discount Controls -->
+                            <div class="mt-4">
+                                <div class="form-group">
+                                    <label for="discountP" class="text-secondary font-weight-medium">Discount (%)</label>
+                                    <div class="input-group">
+                                        <input onkeydown="return false" value="0" min="0" type="number" step="0.25"
+                                               onchange="DiscountChange()" class="form-control text-center" id="discountP"/>
 
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button onclick="CreateInvoice()" class="btn btn-block mt-4 py-2 text-white font-weight-medium" style="background-color: #D1299B;">
+                                <i class="bi bi-check-circle me-1"></i> CONFIRM INVOICE
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
             <!--Product Section-->
-            <div class="col-md-4 col-lg-4 p-2">
-                <div class="shadow-sm h-100 bg-white rounded-3 p-3">
+            <div class="col-md-4 col-lg-4 p-3">
+                <div class="shadow h-100 bg-white rounded-lg p-4 border">
                     <table class="table  w-100" id="productTable">
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
@@ -73,9 +105,10 @@
                     </table>
                 </div>
             </div>
+
             <!--Customer Section -->
-            <div class="col-md-4 col-lg-4 p-2">
-                <div class="shadow-sm h-100 bg-white rounded-3 p-3">
+            <div class="col-md-4 col-lg-4 p-3">
+                <div class="shadow h-100 bg-white rounded-lg p-4 border">
                     <table class="table table-sm w-100" id="customerTable">
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
