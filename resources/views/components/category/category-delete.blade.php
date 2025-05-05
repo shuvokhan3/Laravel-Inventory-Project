@@ -32,6 +32,8 @@
         });
         hideLoader();
 
+        console.log(res);
+
 
         if(res.data === 1 ){
             successToast("Category Delete Successfully!!");
