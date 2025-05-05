@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller{
+
+
+    //Auth backend
     public function UserRegistration(Request $request){
         try{
 
@@ -179,6 +182,8 @@ class UserController extends Controller{
 
         return redirect('/login')->cookie('token', '',-1);
     }
+
+    //load user profile data automaticaly when user open there profile
     public function getUserProfileData(Request $request)
     {
         $email = $request->header('email');
@@ -198,6 +203,8 @@ class UserController extends Controller{
             ]);
         }
     }
+
+    //profile update
     public function upDateUserProfileData(Request $request)
     {
         //id and email come from token header, that issue for this user when user try to login
@@ -233,14 +240,34 @@ class UserController extends Controller{
             ]);
         }
     }
+    public function AdminDetails(Request $request){
 
+        try{
 
+            $user_id = $request->header('id');
+
+            $name = User::where('id', $user_id)
+                ->get('firstName');
+            $email = User::where('id', $user_id)
+                ->get('email');
+            return response()->json([
+                'status'=>'success',
+                'name' => $name,
+                'email' => $email
+            ],200);
+
+        }catch (\Exception $ex){
+            return response()->json([
+                'status'=>'failed',
+                'message'=>'Something Went Wrong'
+            ]);
+        }
+    }
     //page view controller
     public function ViewLogin()
     {
         return view('pages.auth.login-page');
     }
-
     public function ViewRegister(){
         return view('pages.auth.registration-page');
     }
@@ -254,8 +281,9 @@ class UserController extends Controller{
     {
         return view('pages.auth.verify-otp-page');
     }
-
     public function userProfile(){
         return view('pages.dashboard.userProfile-page');
     }
+
+
 }
