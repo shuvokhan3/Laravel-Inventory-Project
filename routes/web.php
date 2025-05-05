@@ -27,6 +27,9 @@ Route::post('/passwordReset',[UserController::class,'PasswordReset'])->middlewar
 Route::get('/getUserProfileData',[UserController::class, 'getUserProfileData'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/upDateUserProfileData',[UserController::class, 'upDateUserProfileData'])->middleware(TokenVerificationMiddleware::class);
 
+//Admin name and email details show on the header part of the dashboard
+Route::get('/getAdminDetails',[UserController::class, 'AdminDetails'])->middleware(TokenVerificationMiddleware::class);
+
 
 //category route
 
