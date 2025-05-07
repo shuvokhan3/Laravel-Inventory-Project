@@ -65,16 +65,20 @@ class ProductController extends Controller
     //delete product
     public function DeleteProduct(Request $request){
         try{
+
             $user_id = $request->header('id');
             $product_id = $request->input('id');
             //get this product image file
             $filePath = $request->input('file_path');
-            //delete this image
-            File::delete($filePath);
+
 
             Product::where('user_id','=' , $user_id)
                 ->where('id', '=', $product_id)
                 ->delete();
+
+            //delete this image
+            File::delete($filePath);
+
             return response()->json([
                 'status' => 'success',
                 'message'=> 'Product deleted successfully'
