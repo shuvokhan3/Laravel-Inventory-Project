@@ -1,0 +1,11 @@
+@extends('layout.Homepage-layout')
+@section('content')
+    @include('components.Homepage.havbar')
+    @include('components.Homepage.Hero')
+    @include('components.Homepage.Introvideo')
+    @include('components.Homepage.Aboutus')
+    @include('components.Homepage.Pricing')
+    @include('components.Homepage.Callaction')
+    @include('components.Homepage.Testimonial')
+    @include('components.Homepage.Footer')
+@endsection
