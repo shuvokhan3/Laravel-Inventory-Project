@@ -180,7 +180,7 @@ class UserController extends Controller{
     }
     public function UserLogout(){
 
-        return redirect('/login')->cookie('token', '',-1);
+        return redirect('/')->cookie('token', '',-1);
     }
 
     //load user profile data automaticaly when user open there profile
