@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesReport;
@@ -104,3 +105,7 @@ Route::get('/dashboard',[DashboardController::class,'Dashboard'])->middleware(To
 Route::get('/userProfile',[UserController::class, 'userProfile'])->middleware(TokenVerificationMiddleware::class);
 
 Route::get('/salePage',[InvoiceController::class, 'SalePage'])->middleware(TokenVerificationMiddleware::class);
+
+//Home page route
+Route::get('/',[HomepageController::class,'Homepage']);
+
