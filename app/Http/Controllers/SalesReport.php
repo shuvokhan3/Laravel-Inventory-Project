@@ -18,7 +18,6 @@ class SalesReport extends Controller
 
         try{
 
-
             $user_id=$request->header('id');
             $FormDate=date('Y-m-d',strtotime($request->FormDate));
             $ToDate=date('Y-m-d',strtotime($request->ToDate));
@@ -58,7 +57,7 @@ class SalesReport extends Controller
             'vat'=> $vat,
             'list'=>$list,
             'FormDate'=>$request->FormDate,
-            'ToDate'=>$request->FormDate
+            'ToDate'=>$request->ToDate
         ];
 
 
