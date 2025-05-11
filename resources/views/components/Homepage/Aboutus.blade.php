@@ -15,7 +15,7 @@
             <div class="w-full">
                 <div class="scroll-revealed">
                     <h6 class="mb-2 block text-lg font-semibold text-primary">
-                        About Us
+                        About Product
                     </h6>
                     <h2 class="mb-6">
                         Our team comes with the experience and knowledge
