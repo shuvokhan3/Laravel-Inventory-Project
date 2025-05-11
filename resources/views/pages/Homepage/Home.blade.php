@@ -1,6 +1,6 @@
 @extends('layout.Homepage-layout')
 @section('content')
-    @include('components.Homepage.havbar')
+    @include('components.Homepage.navbar')
     @include('components.Homepage.Hero')
     @include('components.Homepage.Introvideo')
     @include('components.Homepage.Aboutus')
