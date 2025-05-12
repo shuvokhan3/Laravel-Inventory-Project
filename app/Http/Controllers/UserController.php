@@ -89,7 +89,8 @@ class UserController extends Controller{
             //send otp to user email address
 
             try{
-                Mail::to($email)->to(new OTPMail($otp));
+                //send mail to user email address
+                Mail::to($email)->send(new OTPMail($otp));
             }catch (\Exception $ex){
                 return response()->json([
                     "status" => "failed",
